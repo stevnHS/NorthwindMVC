@@ -1,4 +1,4 @@
-﻿using NorthwindMVC.Services.Dtos;
+﻿using NorthwindMVC.Services.DTOs;
 
 namespace NorthwindMVC.Services
 {

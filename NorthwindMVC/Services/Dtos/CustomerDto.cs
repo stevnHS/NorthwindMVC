@@ -1,4 +1,4 @@
-﻿namespace NorthwindMVC.Services.Dtos
+﻿namespace NorthwindMVC.Services.DTOs
 {
     public class CustomerDto
     {

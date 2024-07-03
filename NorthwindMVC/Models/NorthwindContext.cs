@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using NorthwindMVC.Services.Dtos;
+using NorthwindMVC.Services.DTOs;
 
 namespace NorthwindMVC.Models;
 
@@ -606,5 +606,5 @@ public partial class NorthwindContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-public DbSet<NorthwindMVC.Services.Dtos.CustomerDto> CustomerDto { get; set; } = default!;
+public DbSet<NorthwindMVC.Services.DTOs.CustomerDto> CustomerDto { get; set; } = default!;
 }
