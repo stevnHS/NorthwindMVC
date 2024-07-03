@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NorthwindMVC.Models;
+using NorthwindMVC.Repositories;
+using NorthwindMVC.Services;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<NorthwindContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NWConnString")));
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 var app = builder.Build();
 
