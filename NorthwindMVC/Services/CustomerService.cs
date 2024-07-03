@@ -20,7 +20,8 @@ namespace NorthwindMVC.Services
             {
                 Id = c.CustomerId,
                 Name = c.CompanyName,
-
+                Contact = c.ContactName,
+                Phone = c.Phone,
             });
         }
 

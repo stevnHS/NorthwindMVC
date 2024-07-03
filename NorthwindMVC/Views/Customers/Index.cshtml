@@ -4,16 +4,27 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>客戶清單</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">新增客戶</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                客戶ID
+            </th>
+
+            <th>
+                @* @Html.DisplayNameFor(model => model.Name) *@
+                客戶名稱
+            </th>
+            <th>
+                聯絡人
+            </th>
+            <th>
+                電話
             </th>
             <th></th>
         </tr>
@@ -22,12 +33,21 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.Contact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">編輯</a> |
+                @* <a asp-action="Details" asp-route-id="@item.Id">Details</a> | *@
+                <a asp-action="Delete" asp-route-id="@item.Id">刪除</a>
             </td>
         </tr>
 }
