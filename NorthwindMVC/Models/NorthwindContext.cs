@@ -607,4 +607,6 @@ public partial class NorthwindContext : DbContext
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
 public DbSet<NorthwindMVC.Services.DTOs.CustomerDto> CustomerDto { get; set; } = default!;
+
+public DbSet<NorthwindMVC.Services.DTOs.ProductDto> ProductDto { get; set; } = default!;
 }
