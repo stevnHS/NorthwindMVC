@@ -7,14 +7,25 @@ namespace NorthwindMVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly NorthwindContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController( NorthwindContext context, ILogger<HomeController> logger)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
+            var customer = _context.Products.FirstOrDefault(c => c.ProductId == 5);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            
+            Console.WriteLine(customer?.ProductName);
+
             return View();
         }
 
