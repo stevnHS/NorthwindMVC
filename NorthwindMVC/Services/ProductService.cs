@@ -33,13 +33,20 @@ namespace NorthwindMVC.Services
         {
             // 從 Repos 取道 Products表中所有資料
             IEnumerable<Product> products = await _productRepository.GetAllAsync();
-            
+
             // 傳回 ProductDto 
             return products.Select(p => new ProductDto
             {
                 Id = p.ProductId,
                 Name = p.ProductName,
                 UnitPrice = p.UnitPrice ?? 0,
+                Status = p.Status switch
+                {
+                    1 => "上架中",
+                    2 => "已下架",
+                    3 => "已售出",
+                    _ => throw new ArgumentException("Product 的 Status 的資料沒有在目前的 pattern 中")
+                },
             });
         }
 
@@ -47,7 +54,7 @@ namespace NorthwindMVC.Services
         {
             // 從 Repos 取 Products表中當筆資料
             Product? product = await _productRepository.GetByIdAsync(id);
-            if(product == null) throw new Exception("Product not found");
+            if (product == null) throw new Exception("Product 找不到");
 
             ProductDto currentProduct = new ProductDto()
             {

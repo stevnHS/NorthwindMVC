@@ -14,5 +14,8 @@ namespace NorthwindMVC.Services.DTOs
         public decimal UnitPrice { get; set; }
 
         //bool? Discontinued {  get; set; }
+
+        [DisplayName("狀態")]
+        public string? Status { get; set; }
     }
 }

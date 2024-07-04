@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using NorthwindMVC.Services.DTOs;
 
 namespace NorthwindMVC.Models;
 
@@ -47,6 +46,8 @@ public partial class NorthwindContext : DbContext
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<ProductSalesFor1997> ProductSalesFor1997s { get; set; }
+
+    public virtual DbSet<ProductStatus> ProductStatuses { get; set; }
 
     public virtual DbSet<ProductsAboveAveragePrice> ProductsAboveAveragePrices { get; set; }
 
@@ -445,6 +446,10 @@ public partial class NorthwindContext : DbContext
                 .HasForeignKey(d => d.CategoryId)
                 .HasConstraintName("FK_Products_Categories");
 
+            entity.HasOne(d => d.StatusNavigation).WithMany(p => p.Products)
+                .HasForeignKey(d => d.Status)
+                .HasConstraintName("FK_Products_ToTable");
+
             entity.HasOne(d => d.Supplier).WithMany(p => p.Products)
                 .HasForeignKey(d => d.SupplierId)
                 .HasConstraintName("FK_Products_Suppliers");
@@ -459,6 +464,14 @@ public partial class NorthwindContext : DbContext
             entity.Property(e => e.CategoryName).HasMaxLength(15);
             entity.Property(e => e.ProductName).HasMaxLength(40);
             entity.Property(e => e.ProductSales).HasColumnType("money");
+        });
+
+        modelBuilder.Entity<ProductStatus>(entity =>
+        {
+            entity.HasKey(e => e.StatusId).HasName("PK__tmp_ms_x__C8EE2043532CE71B");
+
+            entity.Property(e => e.StatusId).HasColumnName("StatusID");
+            entity.Property(e => e.StatusName).HasMaxLength(10);
         });
 
         modelBuilder.Entity<ProductsAboveAveragePrice>(entity =>
@@ -606,6 +619,4 @@ public partial class NorthwindContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-public DbSet<NorthwindMVC.Services.DTOs.ProductDto> ProductDto { get; set; } = default!;
 }

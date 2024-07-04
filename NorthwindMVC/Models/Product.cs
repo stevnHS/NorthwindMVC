@@ -25,9 +25,13 @@ public partial class Product
 
     public bool? Discontinued { get; set; }
 
+    public int? Status { get; set; }
+
     public virtual Category? Category { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+
+    public virtual ProductStatus? StatusNavigation { get; set; }
 
     public virtual Supplier? Supplier { get; set; }
 }
