@@ -46,7 +46,9 @@ namespace NorthwindMVC.Services
         public async Task<ProductDto> GetProductsByIdAsync(int id)
         {
             // 從 Repos 取 Products表中當筆資料
-            Product product = await _productRepository.GetByIdAsync(id);
+            Product? product = await _productRepository.GetByIdAsync(id);
+            if(product == null) throw new Exception("Product not found");
+
             ProductDto currentProduct = new ProductDto()
             {
                 Id = product.ProductId,

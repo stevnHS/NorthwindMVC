@@ -31,11 +31,10 @@ namespace NorthwindMVC.Repositories
             return await _context.Products.ToListAsync();
         }
 
-        public async Task<Product> GetByIdAsync(int id)
+        public async Task<Product?> GetByIdAsync(int id)
         {
-            // 找到特定ID的資料，若找不到則回傳空的Product物件
+            // 找到特定ID的資料，若找不到則回傳 Null
             var currentProduct = await _context.Products.FindAsync(id);
-            if (currentProduct == null) return new Product();
             return currentProduct;
         }
 

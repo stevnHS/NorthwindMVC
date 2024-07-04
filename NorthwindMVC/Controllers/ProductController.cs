@@ -7,7 +7,6 @@ namespace NorthwindMVC.Controllers
 {
     public class ProductController : Controller
     {
-
         private readonly IProductService _productService;
         // GET: ProductController
         public ProductController(IProductService productService)
@@ -20,14 +19,15 @@ namespace NorthwindMVC.Controllers
         }
 
         // GET: ProductController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        //public ActionResult Details(int id)
+        //{
+        //    return View();
+        //}
 
         // GET: ProductController/Create
         public IActionResult Create()
         {
+            // 新增商品資料介面
             return View();
         }
 
@@ -36,6 +36,7 @@ namespace NorthwindMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductDto newProduct)
         {
+            // 呼叫Service幫忙新增Product
             try
             {
                 await _productService.AddProductsAsync(newProduct);
@@ -49,10 +50,18 @@ namespace NorthwindMVC.Controllers
         }
 
         // GET: ProductController/Edit/5
-        public async Task<ActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            ProductDto current =await _productService.GetProductsByIdAsync(id);
-            return View(current);
+            // 秀出選中的資料，若找不到則拋出 404 Error
+            try
+            {
+                ProductDto current = await _productService.GetProductsByIdAsync(id);
+                return View(current);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
 
         // POST: ProductController/Edit/5
@@ -62,7 +71,7 @@ namespace NorthwindMVC.Controllers
         {
             try
             {
-                // 呼叫Service修改資料
+                // 呼叫Service幫忙修改資料
                 await _productService.UpdateProductsAsync(productDto);
                 return RedirectToAction(nameof(Index));
             }
@@ -75,10 +84,10 @@ namespace NorthwindMVC.Controllers
         // GET: ProductController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
+            // 呼叫Service執行刪除業務邏輯，若拋錯則回傳 400 error
             try
             {
                 await _productService.DeleteProductsAsync(id);
-
                 return RedirectToAction(nameof(Index));
             }
             catch
