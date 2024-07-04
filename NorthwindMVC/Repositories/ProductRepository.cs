@@ -31,14 +31,18 @@ namespace NorthwindMVC.Repositories
             return await _context.Products.ToListAsync();
         }
 
-        public Task<Product> GetByIdAsync(int id)
+        public async Task<Product> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            // 找到特定ID的資料，若找不到則回傳空的Product物件
+            var currentProduct = await _context.Products.FindAsync(id);
+            if (currentProduct == null) return new Product();
+            return currentProduct;
         }
 
-        public Task UpdateAsync(Product product)
+        public async Task UpdateAsync(Product product)
         {
-            throw new NotImplementedException();
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
         }
     }
 

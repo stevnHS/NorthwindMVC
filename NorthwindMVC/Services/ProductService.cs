@@ -31,7 +31,10 @@ namespace NorthwindMVC.Services
 
         public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
         {
-            var products = await _productRepository.GetAllAsync();
+            // 從 Repos 取道 Products表中所有資料
+            IEnumerable<Product> products = await _productRepository.GetAllAsync();
+            
+            // 傳回 ProductDto 
             return products.Select(p => new ProductDto
             {
                 Id = p.ProductId,
@@ -40,14 +43,32 @@ namespace NorthwindMVC.Services
             });
         }
 
-        public Task<ProductDto> GetProductsByIdAsync(int id)
+        public async Task<ProductDto> GetProductsByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            // 從 Repos 取 Products表中當筆資料
+            Product product = await _productRepository.GetByIdAsync(id);
+            ProductDto currentProduct = new ProductDto()
+            {
+                Id = product.ProductId,
+                Name = product.ProductName,
+                UnitPrice = product.UnitPrice ?? 0,
+            };
+
+            // 回傳 ProductDto: 當筆的商品資訊
+            return currentProduct;
         }
 
-        public Task UpdateProductsAsync(ProductDto ProductDto)
+        public async Task UpdateProductsAsync(ProductDto ProductDto)
         {
-            throw new NotImplementedException();
+            // 轉成 Product Entity，再呼叫Repos進行修改
+            Product product = new Product()
+            {
+                ProductId = ProductDto.Id,
+                ProductName = ProductDto.Name,
+                UnitPrice = ProductDto.UnitPrice,
+            };
+
+            await _productRepository.UpdateAsync(product);
         }
     }
 }

@@ -49,18 +49,21 @@ namespace NorthwindMVC.Controllers
         }
 
         // GET: ProductController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            ProductDto current =await _productService.GetProductsByIdAsync(id);
+            return View(current);
         }
 
         // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, ProductDto productDto)
         {
             try
             {
+                // 呼叫Service修改資料
+                await _productService.UpdateProductsAsync(productDto);
                 return RedirectToAction(nameof(Index));
             }
             catch
