@@ -1,4 +1,5 @@
-﻿using NorthwindMVC.Repositories;
+﻿using NorthwindMVC.Models;
+using NorthwindMVC.Repositories;
 using NorthwindMVC.Services.DTOs;
 
 namespace NorthwindMVC.Services
@@ -12,14 +13,20 @@ namespace NorthwindMVC.Services
         }
 
 
-        public Task AddProductsAsync(ProductDto ProductDto)
+        public async Task AddProductsAsync(ProductDto productDto)
         {
-            throw new NotImplementedException();
+            Product newProduct = new Product()
+            {
+                ProductName = productDto.Name,
+                UnitPrice = productDto.UnitPrice
+            };
+
+            await _productRepository.AddAsync(newProduct);
         }
 
-        public Task DeleteProductsAsync(int id)
+        public async Task DeleteProductsAsync(int id)
         {
-            throw new NotImplementedException();
+            await _productRepository.DeleteAsync(id);
         }
 
         public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()

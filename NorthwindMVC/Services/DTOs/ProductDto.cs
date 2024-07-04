@@ -13,5 +13,6 @@ namespace NorthwindMVC.Services.DTOs
         [DisplayName("單價")]
         public decimal UnitPrice { get; set; }
 
+        //bool? Discontinued {  get; set; }
     }
 }

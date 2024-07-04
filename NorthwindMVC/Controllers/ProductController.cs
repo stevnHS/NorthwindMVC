@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NorthwindMVC.Services;
+using NorthwindMVC.Services.DTOs;
 
 namespace NorthwindMVC.Controllers
 {
@@ -25,7 +26,7 @@ namespace NorthwindMVC.Controllers
         }
 
         // GET: ProductController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -33,10 +34,12 @@ namespace NorthwindMVC.Controllers
         // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(ProductDto newProduct)
         {
             try
             {
+                await _productService.AddProductsAsync(newProduct);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -67,24 +70,33 @@ namespace NorthwindMVC.Controllers
         }
 
         // GET: ProductController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
+                await _productService.DeleteProductsAsync(id);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return BadRequest();
             }
         }
+
+        // POST: ProductController/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using NorthwindMVC.Services.DTOs;
 
 namespace NorthwindMVC.Models;
 
@@ -430,6 +429,7 @@ public partial class NorthwindContext : DbContext
 
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
+            entity.Property(e => e.Discontinued).HasDefaultValue(false);
             entity.Property(e => e.ProductName).HasMaxLength(40);
             entity.Property(e => e.QuantityPerUnit).HasMaxLength(20);
             entity.Property(e => e.ReorderLevel).HasDefaultValue((short)0);
@@ -605,8 +605,4 @@ public partial class NorthwindContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-public DbSet<NorthwindMVC.Services.DTOs.CustomerDto> CustomerDto { get; set; } = default!;
-
-public DbSet<NorthwindMVC.Services.DTOs.ProductDto> ProductDto { get; set; } = default!;
 }

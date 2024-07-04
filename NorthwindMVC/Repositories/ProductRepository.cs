@@ -5,19 +5,25 @@ namespace NorthwindMVC.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-    private readonly NorthwindContext _context;
+        private readonly NorthwindContext _context;
         public ProductRepository(NorthwindContext context)
         {
             _context = context;
         }
-        public Task AddAsync(Product product)
+        public async Task AddAsync(Product product)
         {
-            throw new NotImplementedException();
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var deletedProduct = await _context.Products.FindAsync(id);
+            if (deletedProduct == null) return;
+            // 如果找不到就不刪除
+            _context.Products.Remove(deletedProduct);
+            await _context.SaveChangesAsync();
+
         }
 
         public async Task<IEnumerable<Product>> GetAllAsync()
