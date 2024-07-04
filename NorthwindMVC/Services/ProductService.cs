@@ -24,6 +24,16 @@ namespace NorthwindMVC.Services
             await _productRepository.AddAsync(newProduct);
         }
 
+        public async Task ChangeProductStatusAsync(int id)
+        {
+            // 取出這筆
+            var current = await _productRepository.GetByIdAsync(id);
+            if (current == null) return;
+
+            current.Status = (current.Status == 1 ? 2 : 1);
+            await _productRepository.UpdateAsync(current);
+        }
+
         public async Task DeleteProductsAsync(int id)
         {
             await _productRepository.DeleteAsync(id);
