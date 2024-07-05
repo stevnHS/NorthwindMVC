@@ -18,7 +18,8 @@ namespace NorthwindMVC.Services
             Product newProduct = new Product()
             {
                 ProductName = productDto.Name,
-                UnitPrice = productDto.UnitPrice
+                UnitPrice = productDto.UnitPrice,
+                Status = 1
             };
 
             await _productRepository.AddAsync(newProduct);
@@ -80,14 +81,22 @@ namespace NorthwindMVC.Services
         public async Task UpdateProductsAsync(ProductDto ProductDto)
         {
             // 轉成 Product Entity，再呼叫Repos進行修改
-            Product product = new Product()
+
+            var dbProduct = await _productRepository.GetByIdAsync(ProductDto.Id);
+
+            if (dbProduct == null) throw new Exception("Product 找不到");
+
+            dbProduct.ProductName = ProductDto.Name;
+            dbProduct.UnitPrice = ProductDto.UnitPrice;
+            dbProduct.Status = ProductDto.Status switch
             {
-                ProductId = ProductDto.Id,
-                ProductName = ProductDto.Name,
-                UnitPrice = ProductDto.UnitPrice,
+                "上架中" => 1,
+                "已下架" => 2,
+                "已售出" => 3,
+                _ => 1
             };
 
-            await _productRepository.UpdateAsync(product);
+            await _productRepository.UpdateAsync(dbProduct);
         }
     }
 }

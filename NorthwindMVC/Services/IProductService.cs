@@ -9,7 +9,6 @@ namespace NorthwindMVC.Services
         Task AddProductsAsync(ProductDto productDto);
         Task UpdateProductsAsync(ProductDto productDto);
         Task DeleteProductsAsync(int id);
-
         Task ChangeProductStatusAsync(int id);
     }
 }
