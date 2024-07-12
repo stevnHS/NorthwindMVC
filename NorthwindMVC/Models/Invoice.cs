@@ -19,7 +19,7 @@ public partial class Invoice
 
     public string? CustomerId { get; set; }
 
-    public string CustomerName { get; set; } = null!;
+    public string? CustomerName { get; set; }
 
     public string? Address { get; set; }
 
@@ -31,9 +31,9 @@ public partial class Invoice
 
     public string? Country { get; set; }
 
-    public string Salesperson { get; set; } = null!;
+    public int? Salesperson { get; set; }
 
-    public int OrderId { get; set; }
+    public int? OrderId { get; set; }
 
     public DateTime? OrderDate { get; set; }
 
@@ -41,19 +41,19 @@ public partial class Invoice
 
     public DateTime? ShippedDate { get; set; }
 
-    public string ShipperName { get; set; } = null!;
+    public string? ShipperName { get; set; }
 
-    public int ProductId { get; set; }
+    public int? ProductId { get; set; }
 
-    public string ProductName { get; set; } = null!;
+    public string? ProductName { get; set; }
 
-    public decimal UnitPrice { get; set; }
+    public double? UnitPrice { get; set; }
 
-    public short Quantity { get; set; }
+    public int? Quantity { get; set; }
 
-    public float Discount { get; set; }
+    public double? Discount { get; set; }
 
-    public decimal? ExtendedPrice { get; set; }
+    public double? ExtendedPrice { get; set; }
 
-    public decimal? Freight { get; set; }
+    public double? Freight { get; set; }
 }

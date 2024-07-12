@@ -5,7 +5,7 @@ namespace NorthwindMVC.Models;
 
 public partial class OrdersQry
 {
-    public int OrderId { get; set; }
+    public int? OrderId { get; set; }
 
     public string? CustomerId { get; set; }
 
@@ -19,7 +19,7 @@ public partial class OrdersQry
 
     public int? ShipVia { get; set; }
 
-    public decimal? Freight { get; set; }
+    public int? Freight { get; set; }
 
     public string? ShipName { get; set; }
 
@@ -33,7 +33,7 @@ public partial class OrdersQry
 
     public string? ShipCountry { get; set; }
 
-    public string CompanyName { get; set; } = null!;
+    public string? CompanyName { get; set; }
 
     public string? Address { get; set; }
 

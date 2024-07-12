@@ -19,7 +19,7 @@ public partial class Order
 
     public int? ShipVia { get; set; }
 
-    public decimal? Freight { get; set; }
+    public int? Freight { get; set; }
 
     public string? ShipName { get; set; }
 

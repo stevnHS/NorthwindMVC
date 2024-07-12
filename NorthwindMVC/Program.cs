@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<NorthwindContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("NWConnString")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("NWConnString")));
 
 // products
 builder.Services.AddScoped<IProductRepository, ProductRepository>();

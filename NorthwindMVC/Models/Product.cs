@@ -15,23 +15,19 @@ public partial class Product
 
     public string? QuantityPerUnit { get; set; }
 
-    public decimal? UnitPrice { get; set; }
+    public double? UnitPrice { get; set; }
 
-    public short? UnitsInStock { get; set; }
+    public int? UnitsInStock { get; set; }
 
-    public short? UnitsOnOrder { get; set; }
+    public int? UnitsOnOrder { get; set; }
 
-    public short? ReorderLevel { get; set; }
+    public int? ReorderLevel { get; set; }
 
-    public bool? Discontinued { get; set; }
-
-    public int? Status { get; set; }
+    public string Discontinued { get; set; } = null!;
 
     public virtual Category? Category { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
-
-    public virtual ProductStatus? StatusNavigation { get; set; }
 
     public virtual Supplier? Supplier { get; set; }
 }

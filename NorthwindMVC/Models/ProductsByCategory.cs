@@ -5,13 +5,13 @@ namespace NorthwindMVC.Models;
 
 public partial class ProductsByCategory
 {
-    public string CategoryName { get; set; } = null!;
+    public string? CategoryName { get; set; }
 
-    public string ProductName { get; set; } = null!;
+    public string? ProductName { get; set; }
 
     public string? QuantityPerUnit { get; set; }
 
-    public short? UnitsInStock { get; set; }
+    public int? UnitsInStock { get; set; }
 
-    public bool Discontinued { get; set; }
+    public string? Discontinued { get; set; }
 }

@@ -19,7 +19,6 @@ namespace NorthwindMVC.Services
             {
                 ProductName = productDto.Name,
                 UnitPrice = productDto.UnitPrice,
-                Status = 1
             };
 
             await _productRepository.AddAsync(newProduct);
@@ -31,7 +30,6 @@ namespace NorthwindMVC.Services
             var current = await _productRepository.GetByIdAsync(id);
             if (current == null) return;
 
-            current.Status = (current.Status == 1 ? 2 : 1);
             await _productRepository.UpdateAsync(current);
         }
 
@@ -51,13 +49,6 @@ namespace NorthwindMVC.Services
                 Id = p.ProductId,
                 Name = p.ProductName,
                 UnitPrice = p.UnitPrice ?? 0,
-                Status = p.Status switch
-                {
-                    1 => "上架中",
-                    2 => "已下架",
-                    3 => "已售出",
-                    _ => throw new ArgumentException("Product 的 Status 的資料沒有在目前的 pattern 中")
-                },
             });
         }
 
@@ -88,13 +79,7 @@ namespace NorthwindMVC.Services
 
             dbProduct.ProductName = ProductDto.Name;
             dbProduct.UnitPrice = ProductDto.UnitPrice;
-            dbProduct.Status = ProductDto.Status switch
-            {
-                "上架中" => 1,
-                "已下架" => 2,
-                "已售出" => 3,
-                _ => 1
-            };
+
 
             await _productRepository.UpdateAsync(dbProduct);
         }
