@@ -48,7 +48,7 @@ namespace NorthwindMVC.Services
             {
                 Id = p.ProductId,
                 Name = p.ProductName,
-                UnitPrice = p.UnitPrice ?? 0,
+                UnitPrice = p.UnitPrice,
             });
         }
 
@@ -62,7 +62,7 @@ namespace NorthwindMVC.Services
             {
                 Id = product.ProductId,
                 Name = product.ProductName,
-                UnitPrice = product.UnitPrice ?? 0,
+                UnitPrice = product.UnitPrice,
             };
 
             // 回傳 ProductDto: 當筆的商品資訊

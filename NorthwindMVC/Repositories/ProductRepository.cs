@@ -1,47 +1,56 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data;
+using Dapper;
 using NorthwindMVC.Models;
 
 namespace NorthwindMVC.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly NorthwindContext _context;
-        public ProductRepository(NorthwindContext context)
+        private readonly IDbConnection _conn;
+        public ProductRepository(IDbConnection connection)
         {
-            _context = context;
+            _conn = connection;
         }
         public async Task AddAsync(Product product)
         {
-            await _context.Products.AddAsync(product);
-            await _context.SaveChangesAsync();
+            string sql = "INSERT INTO Products (ProductName, UnitPrice) VALUES (@ProductName, @UnitPrice);";
+            await _conn.ExecuteAsync(sql, product);
         }
 
         public async Task DeleteAsync(int id)
         {
-            var deletedProduct = await _context.Products.FindAsync(id);
-            if (deletedProduct == null) return;
-            // 如果找不到就不刪除
-            _context.Products.Remove(deletedProduct);
-            await _context.SaveChangesAsync();
-
+            string sql = "DELETE FROM Products WHERE ProductId=@Id;";
+            await _conn.ExecuteAsync(sql, new { Id = id });
         }
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await _context.Products.ToListAsync();
+
+            var sql = "SELECT * FROM Products";
+            return await _conn.QueryAsync<Product>(sql);
+
         }
 
         public async Task<Product?> GetByIdAsync(int id)
         {
-            // 找到特定ID的資料，若找不到則回傳 Null
-            var currentProduct = await _context.Products.FindAsync(id);
-            return currentProduct;
+            var sql = "SELECT * FROM Products where ProductID = @Id";
+            return await _conn.QueryFirstOrDefaultAsync<Product>(sql, new { Id = id });
+
         }
 
         public async Task UpdateAsync(Product product)
         {
-            _context.Products.Update(product);
-            await _context.SaveChangesAsync();
+            // 只能修改名稱跟價格，不像 ef 可以直接對應，要修改其他欄位就要改改 sql
+            string sql = @"UPDATE Products
+                            SET ProductName = @Name, UnitPrice = @Price
+                            WHERE ProductId = @Id ";
+
+            await _conn.ExecuteAsync(sql, new
+            {
+                Name = product.ProductName,
+                Price = product.UnitPrice,
+                Id = product.ProductId
+            });
         }
     }
 

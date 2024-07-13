@@ -41,18 +41,7 @@
                     <a asp-action="Edit" asp-route-id="@item.Id">編輯</a> |
                     @* <a asp-action="Details" asp-route-id="@item.Id">Details</a> |  *@
                     <a asp-action="Delete" asp-route-id="@item.Id">刪除</a> |
-                        <span id="action-button">
-                    @{
-                        if (item.Status == "上架中")
-                        {
-                            <button type="button" class="btn btn-danger btnAction" data-id="@item.Id">下架</button>
-                        }
-                        else if (item.Status == "已下架")
-                        {
-                                <button type="button" class="btn btn-primary btnAction" data-id="@item.Id">上架</button>
-                        }
-                    }
-                        </span>
+                        
 
                 </td>
             </tr>
@@ -61,20 +50,3 @@
 </table>
 
 
-@section Scripts {
-    <script>
-        // 下架按鈕
-        const btnAction = document.querySelectorAll(".btnAction");
-        btnAction.forEach(button => {
-            button.addEventListener("click", async (e) => {
-                const dataId = e.currentTarget.getAttribute('data-id');
-                const url = `@Url.Content("~/api/OffProduct")?id=${dataId}`;
-                
-                const res = await fetch(url);
-
-                // 頁面刷新 代替 畫面部分更新
-                location.reload();
-            });
-        });
-    </script>
-}

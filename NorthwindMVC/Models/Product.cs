@@ -15,7 +15,7 @@ public partial class Product
 
     public string? QuantityPerUnit { get; set; }
 
-    public double? UnitPrice { get; set; }
+    public double UnitPrice { get; set; }
 
     public int? UnitsInStock { get; set; }
 

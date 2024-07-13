@@ -1,16 +1,18 @@
-using Microsoft.EntityFrameworkCore;
-using NorthwindMVC.Models;
+using System.Data;
+using Microsoft.Data.Sqlite;
 using NorthwindMVC.Repositories;
 using NorthwindMVC.Services;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<NorthwindContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("NWConnString")));
+builder.Services.AddScoped<IDbConnection>(sp =>
+    {
+        var connectionString = builder.Configuration.GetConnectionString("NWConnString");
+        return new SqliteConnection(connectionString);
+    });
 
 // products
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
